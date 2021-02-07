@@ -1,7 +1,8 @@
-const span = document.getElementById('number') as HTMLSpanElement;
-const button = document.getElementById('press');
+import Compound from './models/compound';
 
-button?.addEventListener('click', () => {
-  const n = parseInt(span.innerText, 10);
-  span.innerText = (n + 1).toString();
-});
+async function life() {
+  const e = await Compound.parse('Mg(OH)2');
+  console.log(e);
+}
+
+life();

@@ -1,15 +1,32 @@
+$color-bg: #222831;
+$color-fg: #eeeeee;
+$color-1: #393e46;
+$color-2: #00adb5;
+
+$font-stack: Arial, Ubuntu, Helvetica, sans-serif;
+
 body {
-    width: 70%;
-    margin: 10% auto;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
+  background-color: $color-bg;
+  width: 85%;
+  margin: 5% auto;
+  font-family: $font-stack;
+  text-align: center;
 }
 
 h1 {
-    color: green;
+  color: $color-2;
 }
 
-#number, #press {
-    margin: 1em;
+#number {
+  color: $color-fg;
+  margin: 1em;
 }
 
+#press {
+  background-color: $color-1;
+  color: $color-fg;
+  margin: 1em;
+  padding: 0.5em;
+  border: none;
+  border-radius: 5%;
+}
