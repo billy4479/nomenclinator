@@ -1,7 +1,7 @@
 export enum ElementType {
   /* eslint-disable no-unused-vars */
-  Metall = 'Metall',
-  NonMetall = 'NonMetall',
+  Metal = 'Metal',
+  NonMetal = 'NonMetal',
   Metalloid = 'Metalloid',
   Actinide = 'Actinide',
   Lanthanide = 'Lanthanide',
@@ -10,7 +10,7 @@ export enum ElementType {
 }
 
 export default class Element {
-  public elementType: ElementType;
+  public readonly elementType: ElementType;
 
   constructor(
     /* eslint-disable no-unused-vars */
@@ -18,15 +18,16 @@ export default class Element {
     public readonly name: string,
     public readonly atomicNumber: number,
     public readonly atomicWeight: number,
+    public readonly oxidationStates: number[],
     type: string
     /* eslint-enable */
   ) {
     switch (type) {
-      case 'Metall':
-        this.elementType = ElementType.Metall;
+      case 'Metal':
+        this.elementType = ElementType.Metal;
         break;
-      case 'NonMetall':
-        this.elementType = ElementType.NonMetall;
+      case 'NonMetal':
+        this.elementType = ElementType.NonMetal;
         break;
       case 'Metalloid':
         this.elementType = ElementType.Metalloid;

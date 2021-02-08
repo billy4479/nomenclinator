@@ -1,6 +1,10 @@
-import isUpperCase from '../utils';
-import ElementN from './elementN';
+import type ElementN from './elementN';
 import PeriodicTable from './periodicTable';
+
+function isUpperCase(input: string): boolean {
+  if (input.match(/\d/)) return false;
+  return input.toUpperCase() === input;
+}
 
 export const enum CompoundType {
   /* eslint-disable no-unused-vars */
@@ -9,7 +13,7 @@ export const enum CompoundType {
   OssidoBasico,
   Idracido,
   IdruroCovalente,
-  IdruroMetallico,
+  IdruroMetalico,
   Idrossido,
   Ossiacido,
   SaleTernario,
@@ -33,25 +37,28 @@ export default class Compound {
 
   private totalLength: number;
 
-  containsElement(symbol: string): boolean {
+  countElement(symbol: string): number {
     return (
-      this.containsElementInMain(symbol) ||
-      this.containsElementInParentheses(symbol)
+      this.countElementInMain(symbol) + this.countElementInParentheses(symbol)
     );
   }
 
-  containsElementInMain(symbol: string): boolean {
-    return this.main.some((e: ElementN) => e.element.symbol === symbol);
+  countElementInMain(symbol: string): number {
+    let count = 0;
+    this.main.forEach((element) => {
+      if (element.element.symbol === symbol) count = element.n;
+    });
+    return count;
   }
 
-  containsElementInParentheses(symbol: string): boolean {
+  countElementInParentheses(symbol: string): number {
     if (this.canHaveParentheses && this.parentheses !== null) {
-      return this.parentheses.containsElementInMain(symbol);
+      return this.parentheses.countElementInMain(symbol);
     }
-    return false;
+    return 0;
   }
 
-  private constructor(
+  constructor(
     /* eslint-disable no-unused-vars */
     public readonly main: ElementN[],
     public readonly parentheses: Compound | null,
@@ -62,10 +69,7 @@ export default class Compound {
     this.totalLength = main.length + (this.parentheses?.totalLength || 0);
   }
 
-  static async parse(
-    data: string,
-    canHaveParentheses = true
-  ): Promise<Compound> {
+  static parse(data: string, canHaveParentheses = true): Compound {
     /* eslint-disable no-param-reassign */
     /* eslint-disable no-await-in-loop */
     data = data.trim();
@@ -83,7 +87,7 @@ export default class Compound {
       const last = data.indexOf(')');
       if (last === -1) throw new Error('Unable to find closing parentheses');
 
-      parentheses = await Compound.parse(data.substring(first + 1, last));
+      parentheses = Compound.parse(data.substring(first + 1, last));
       let i = last + 1;
       let n = '';
       for (i; i < data.length; i++) {
@@ -107,35 +111,72 @@ export default class Compound {
     }
 
     const main: ElementN[] = [];
+
+    // Foreach found element
     for (let i = 0; i < elementsN; i++) {
       let element = '';
       let n = 1;
       let nStr = '';
+      let endIndex = 0;
       for (let j = 0; j < data.length; j++) {
         if (isUpperCase(data[j])) {
           if (element.length === 0) element += data[j];
-          else break;
+          else {
+            endIndex = j;
+            break;
+          }
         } else if (data[j].match(/\d/)) {
           for (let k = j; k < data.length; k++) {
             if (data[k].match(/\d/)) nStr += data[k];
-            else break;
+            else {
+              endIndex = k;
+              break;
+            }
           }
           n = parseInt(nStr, 10);
+          break;
         } else {
           element += data[j];
         }
       }
+
+      data = data.substring(endIndex);
+
+      const newElement = PeriodicTable.search(element);
       main.push({
-        element: await PeriodicTable.search(element),
+        element: newElement,
         n,
       });
+
+      if (data === '') break;
     }
 
     return new Compound(
       main,
       parentheses || null,
       parenthesesN,
-      CompoundType.Error
+      CompoundType.Special // TODO: Compound-type parsing
     );
+  }
+
+  isEqualTo(other: Compound): boolean {
+    if (other.parentheses !== null) {
+      if (this.parentheses === null) return false;
+      if (!other.parentheses.isEqualTo(this.parentheses)) return false;
+    } else if (this.parentheses !== null) return false;
+
+    if (other.compoundType !== this.compoundType) return false;
+    if (other.main.length !== this.main.length) return false;
+
+    let result = true;
+    other.main.forEach((value) => {
+      if (
+        this.countElementInMain(value.element.symbol) !==
+        other.countElementInMain(value.element.symbol)
+      )
+        result = false;
+    });
+
+    return result;
   }
 }

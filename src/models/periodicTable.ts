@@ -1,35 +1,34 @@
 import Element from './element';
+import data from '../data.json'; // Yeah I know, I'm using a JSON file as a TS file, but otherwise jest would complain
 
 export default class PeriodicTable {
-  static instance: PeriodicTable;
+  private static instance: PeriodicTable;
 
   private static isInitialized = false;
 
-  private readonly elements: Element[];
+  public readonly elements: Element[];
 
   constructor(elements: Element[]) {
     this.elements = elements;
   }
 
-  static async get(): Promise<PeriodicTable> {
+  static get(): PeriodicTable {
     if (this.isInitialized) return PeriodicTable.instance;
 
     const elements: Element[] = [];
-    await fetch('/data.json')
-      .then((value: Response) => value.json())
-      .then((value: any) => {
-        value.elements.forEach((e: any) => {
-          elements.push(
-            new Element(
-              e.symbol,
-              e.name,
-              e.atomicNumber,
-              e.atomicWeight,
-              e.type
-            )
-          );
-        });
-      });
+
+    data.elements.forEach((e: any) => {
+      elements.push(
+        new Element(
+          e.symbol,
+          e.name,
+          e.atomicNumber,
+          e.atomicWeight,
+          e.oxidationStates,
+          e.type
+        )
+      );
+    });
 
     this.instance = new PeriodicTable(
       elements.sort((a, b) => a.atomicNumber - b.atomicNumber)
@@ -39,8 +38,8 @@ export default class PeriodicTable {
     return PeriodicTable.instance;
   }
 
-  static async search(symbol: string): Promise<Element> {
-    const p = await PeriodicTable.get();
+  static search(symbol: string): Element {
+    const p = PeriodicTable.get();
     if (!this.isInitialized) {
       throw new Error('Periodic Table is not initialized!');
     }
@@ -50,10 +49,10 @@ export default class PeriodicTable {
     throw new Error(`Element not found: ${symbol}`);
   }
 
-  static async trySearch(symbol: string): Promise<Element | null> {
+  static trySearch(symbol: string): Element | null {
     try {
-      return await this.search(symbol);
-    } catch (_) {
+      return this.search(symbol);
+    } catch {
       return null;
     }
   }

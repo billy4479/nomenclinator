@@ -1,20 +1,13 @@
-// Snowpack Configuration File
-// See all supported options: https://www.snowpack.dev/#configuration
-
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
   mount: {
-    src: '/',
-    public: {
-      url: '/',
-      static: true,
-    },
-  },
-  scripts: {
-    'run:tsc': 'tsc --noEmit',
-    'run:tsc::watch': '$1 --watch',
+    public: { url: '/', static: true },
+    src: { url: '/dist' },
   },
   plugins: [
+    '@snowpack/plugin-svelte',
+    '@snowpack/plugin-dotenv',
+    '@snowpack/plugin-typescript',
     [
       '@snowpack/plugin-sass',
       {
@@ -23,17 +16,27 @@ module.exports = {
       },
     ],
   ],
-  experiments: {
-    optimize: {
-      bundle: true,
-      splitting: false,
-      manifest: true,
-      minify: true,
-      treeshake: true,
-      target: 'es2020',
-    },
+  routes: [
+    /* Enable an SPA Fallback in development: */
+    // {"match": "routes", "src": ".*", "dest": "/index.html"},
+  ],
+  optimize: {
+    /* Example: Bundle your final build: */
+    // "bundle": true,
+    bundle: true,
+    splitting: false,
+    manifest: true,
+    minify: true,
+    treeshake: true,
+    target: 'es2020',
   },
-  // installOptions: {},
-  // devOptions: {},
-  // buildOptions: {},
+  packageOptions: {
+    /* ... */
+  },
+  devOptions: {
+    /* ... */
+  },
+  buildOptions: {
+    /* ... */
+  },
 };
