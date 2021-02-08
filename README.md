@@ -22,11 +22,3 @@ yarn build
 yarn test
 
 ```
-
-### VSCode
-
-If you use VSCode make sure to add this line to you `settings.json`
-
-```json
-"eslint.lintTask.enable": true
-```
