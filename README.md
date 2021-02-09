@@ -1,6 +1,6 @@
 # Nomenclinator
 
-A tool to get names for chemical compounds.
+A tool to get names for chemical compounds. Works just in Italian... for now 😉
 
 This is meant to be used with `yarn` but you _should_ be able to use also `npm`.
 
