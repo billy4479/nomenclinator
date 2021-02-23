@@ -11,14 +11,22 @@ git clone https://github.com/billy4479/nomenclinator
 cd nomenclinator
 
 yarn
+# or
+npm i
 
 # To spin-up a dev server
-yarn start
+yarn run start
+# or
+npm run start
 
 # To build for production
-yarn build
+yarn run build
+# or
+npm run build
 
 # To run tests
 yarn test
+# or
+npm test
 
 ```
