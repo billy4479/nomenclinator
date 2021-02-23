@@ -102,7 +102,7 @@
 
   .out-container {
     text-align: left;
-    margin: 5em auto;
+    margin: 3em auto;
     background-color: $color-1;
     padding: 2em;
     border: $color-2 solid 1px;

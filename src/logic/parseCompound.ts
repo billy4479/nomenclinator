@@ -8,7 +8,7 @@ function isUpperCase(input: string): boolean {
   return input.toUpperCase() === input;
 }
 
-export default function parse(
+export default function parseCompound(
   data: string,
   canHaveParentheses = true
 ): Compound {
@@ -29,7 +29,7 @@ export default function parse(
     const last = data.indexOf(')');
     if (last === -1) throw new Error('Unable to find closing parentheses');
 
-    parentheses = parse(data.substring(first + 1, last));
+    parentheses = parseCompound(data.substring(first + 1, last));
     let i = last + 1;
     let n = '';
     for (i; i < data.length; i++) {
@@ -44,7 +44,7 @@ export default function parse(
 
     foundParentheses = true;
     // Strip parentheses
-    data = data.replace(data.substring(first, last + 1), '');
+    data = data.replace(data.substring(first, last + n.length + 1), '');
   }
 
   let elementsN = 0;

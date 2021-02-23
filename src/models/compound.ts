@@ -1,5 +1,6 @@
 import noop from '../noop';
 import type ElementN from './elementN';
+import PeriodicTable from './periodicTable';
 
 export enum CompoundType {
   /* eslint-disable no-unused-vars */
@@ -12,7 +13,7 @@ export enum CompoundType {
   Idrossido,
   Ossiacido,
   SaleTernario,
-  Ossoanione,
+  // Ossoanione,
   ElementoSingolo,
   Error,
   Special,
@@ -106,5 +107,19 @@ export default class Compound {
 
   get hasParentheses(): boolean {
     return this.canHaveParentheses && this.parentheses !== null;
+  }
+
+  getElementN(e: string): number {
+    const element = PeriodicTable.search(e);
+    let result = 0;
+
+    this.main.forEach((t) => {
+      if (t.element.symbol === element.symbol) result += t.n;
+    });
+
+    if (this.parentheses !== null)
+      result += this.parentheses.getElementN(e) * this.parenthesesN;
+
+    return result;
   }
 }
