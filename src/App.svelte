@@ -55,7 +55,7 @@
     <div>
       {#if showJSON}
         <pre
-          class="bg-gray-700 p-5 rounded m-3 my-5">
+          class="bg-gray-700 p-5 rounded m-3 my-5 overflow-auto">
           {JSON.stringify(out, undefined, 2)}
         </pre>
       {/if}

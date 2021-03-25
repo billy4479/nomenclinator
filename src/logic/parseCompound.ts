@@ -13,8 +13,8 @@ export default function parseCompound(
   canHaveParentheses = true
 ): Compound {
   /* eslint-disable no-param-reassign */
-  /* eslint-disable no-await-in-loop */
-  data = data.trim();
+
+  data = data.match(/(\w|\d)*/g).join('');
   let foundParentheses = false;
   let parentheses: Compound | undefined;
   let parenthesesN = 0;
