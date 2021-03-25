@@ -28,14 +28,15 @@
 <main class="mt-10 text-white w-4/5 max-w-3xl m-auto text-center m-5">
   <h1 class="text-blue-400 text-6xl m-1">Nomenclinator</h1>
 
-  <form class="mt-10">
+  <form class="mt-10 flex justify-center">
     <input
-      class="bg-gray-800 border-2 border-blue-400 rounded px-3 py-2 outline-none focus:ring"
+      class="bg-gray-800 border-2 border-blue-400 rounded px-3 py-2 my-3 outline-none flex-grow placeholder-gray-500 focus:ring"
       type="text"
+      placeholder="Enter a compound..."
       bind:value={input}
     />
     <input
-      class="m-3 px-3 py-2 bg-gray-700 border-2 border-blue-400 rounded outline-none focus:ring"
+      class="m-3 mr-0 px-3 py-2 bg-gray-700 border-2 border-blue-400 rounded outline-none focus:ring"
       on:click|preventDefault={setOutput}
       type="submit"
       value="Go!"
