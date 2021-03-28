@@ -14,7 +14,7 @@ export default function parseCompound(
 ): Compound {
   /* eslint-disable no-param-reassign */
 
-  data = data.match(/(\w|\d)*/g).join('');
+  data = data.match(/(\w|\d|\(|\))*/g).join('');
   let foundParentheses = false;
   let parentheses: Compound | undefined;
   let parenthesesN = 0;
