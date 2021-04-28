@@ -7,9 +7,7 @@
   "name": "nomenclinator",
   "keywords": [],
   "license": "MIT",
-  "dependencies": {
-    "@fullhuman/postcss-purgecss": "^4.0.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/preset-typescript": "^7.12.7",
     "@snowpack/plugin-babel": "^2.1.5",
