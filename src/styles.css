@@ -1,0 +1,12 @@
+main {
+  min-height: calc(100vh - 150px);
+  min-width: 300px;
+}
+
+.dark path {
+  fill: white;
+}
+
+* {
+  transition-duration: 200ms;
+}

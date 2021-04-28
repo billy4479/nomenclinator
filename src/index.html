@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nomenclinator</title>
+    <link rel="stylesheet" href="./tailwind.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="dark:bg-gray-800">
+    <noscript>Abilita JavaScript per usare questo sito.</noscript>
+
+    <main class="mt-10 w-4/5 max-w-6xl text-center m-auto dark:text-white">
+      <h1 class="text-blue-600 text-4xl m-1 md:text-6xl">Nomenclinator</h1>
+      <button
+        id="dark-mode-toggle"
+        class="m-3 ml-0 px-3 py-2 shadow rounded focus:ring dark:bg-gray-700 dark:hover:bg-gray-800"
+      ></button>
+      <form class="mt-7 flex justify-center" id="input-form">
+        <input
+          class="shadow border border-gray-100 rounded px-3 py-2 my-3 flex-grow placeholder-gray-500 focus:ring dark:bg-gray-700 dark:border-gray-700"
+          type="text"
+          placeholder="Scrivi un composto..."
+          id="input-text"
+        />
+        <input
+          class="m-3 mr-0 px-3 py-2 shadow rounded focus:ring dark:bg-gray-700 dark:hover:bg-gray-800"
+          on:click|preventDefault="{setOutput}"
+          type="submit"
+          value="Vai!"
+        />
+      </form>
+
+      <div class="text-left rounded shadow p-5 mb-10">
+        <b>Tipo di Composto</b>:
+        <div id="out-type"></div>
+
+        <div class="mt-5">
+          <div class="flex justify-between">
+            <b
+              >JSON
+              <small>(roba da nerd)</small>
+              :</b
+            >
+            <button
+              class="rounded shadow py-1 px-2 focus:ring dark:bg-gray-700 dark:hover:bg-gray-800"
+              id="json-toggle"
+            ></button>
+          </div>
+
+          <div id="json-wrapper"></div>
+        </div>
+      </div>
+    </main>
+
+    <div
+      class="footer-wrapper w-4/5 max-w-6xl m-auto text-center dark:text-white"
+    >
+      <a
+        href="https://github.com/billy4479/nomenclinator"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <img
+          class="inline mb-3"
+          alt="GitHub Repo stars"
+          src="https://img.shields.io/github/stars/billy4479/nomenclinator?style=social"
+        />
+      </a>
+      <br />
+      <footer>
+        &copy; Giacomo Ellero 2021 <br />
+        Made with ❤️
+      </footer>
+    </div>
+
+    <script type="module" src="/index.js"></script>
+  </body>
+</html>

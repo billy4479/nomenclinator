@@ -1,8 +1,8 @@
 /* eslint-disable global-require */
+/* eslint-disable import/no-extraneous-dependencies */
 const purgecss = require('@fullhuman/postcss-purgecss')({
-  content: ['./src/**/*.svelte', './public/*.html'],
-  whitelistPatterns: [/svelte-/],
-  defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/]+/g) || [],
+  content: ['./src/**/*.html'],
+  css: ['./src/**/*.css'],
 });
 
 module.exports = {

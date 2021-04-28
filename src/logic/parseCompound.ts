@@ -15,7 +15,10 @@ export default function parseCompound(
 ): Compound {
   /* eslint-disable no-param-reassign */
 
-  data = data.match(/(\w|\d|\(|\))*/g).join('');
+  const match = data.match(/(\w|\d|\(|\))*/g);
+  if (match === null) throw new Error('Invalid input!');
+  else data = match.join('');
+
   let foundParentheses = false;
   let parentheses: Compound | undefined;
   let parenthesesN = 0;
