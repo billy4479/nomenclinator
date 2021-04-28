@@ -17,18 +17,20 @@
   }
 </script>
 
-<main class="mt-10 w-4/5 max-w-6xl m-auto text-center m-5">
+<main
+  class="mt-10 w-4/5 max-w-6xl m-auto text-center m-5 dark:bg-gray-800 dark:text-white"
+>
   <h1 class="text-blue-600 text-4xl m-1 md:text-6xl">Nomenclinator</h1>
 
   <form class="mt-7 flex justify-center">
     <input
-      class="shadow border border-gray-100 rounded px-3 py-2 my-3 flex-grow placeholder-gray-500 focus:ring"
+      class="shadow border border-gray-100 rounded px-3 py-2 my-3 flex-grow placeholder-gray-500 focus:ring dark:bg-gray-700 dark:border-gray-700"
       type="text"
       placeholder="Enter a compound..."
       bind:value={input}
     />
     <input
-      class="m-3 mr-0 px-3 py-2 shadow rounded focus:ring"
+      class="m-3 mr-0 px-3 py-2 shadow rounded focus:ring dark:bg-gray-700 dark:hover:bg-gray-800"
       on:click|preventDefault={setOutput}
       type="submit"
       value="Go!"
@@ -46,7 +48,7 @@
           :</b
         >
         <button
-          class="rounded shadow py-1 px-2 focus:ring"
+          class="rounded shadow py-1 px-2 focus:ring dark:bg-gray-700 dark:hover:bg-gray-800"
           on:click={toggleShowJSON}
         >
           {#if showJSON}
@@ -59,7 +61,7 @@
       <div>
         {#if showJSON}
           <pre
-            class="bg-gray-100 shadow p-5 rounded m-3 my-5 overflow-auto text-gray-900">
+            class="bg-gray-100 shadow p-5 rounded m-3 my-5 overflow-auto text-gray-900 dark:bg-gray-900 dark:text-gray-100">
             {JSON.stringify(out, undefined, 2)}
           </pre>
         {/if}
@@ -68,7 +70,7 @@
   </div>
 </main>
 
-<div class="footer-wrapper w-4/5 max-w-6xl m-auto text-center">
+<div class="footer-wrapper w-4/5 max-w-6xl m-auto text-center dark:text-white">
   <a
     href="https://github.com/billy4479/nomenclinator"
     target="_blank"
