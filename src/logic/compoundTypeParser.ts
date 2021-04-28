@@ -1,8 +1,11 @@
-import Compound, { CompoundType } from '../models/compound';
+import type Compound from '../models/compound';
 import commonCompounds from '../models/commonCompounds';
-import { ElementType } from '../models/element';
+import ElementType from '../models/elementType';
+import CompoundType from '../models/compoundType';
 
 export default function GetCompoundType(c: Compound): CompoundType {
+  // TODO: Perossidi, sali biacidi
+
   let i: number | undefined;
   commonCompounds.forEach((comComp, index) => {
     if (comComp.isEqualTo(c)) {

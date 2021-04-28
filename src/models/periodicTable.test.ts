@@ -1,4 +1,5 @@
 import Element from './element';
+import ElementType from './elementType';
 import PeriodicTable from './periodicTable';
 
 test('element loading', () => {
@@ -8,6 +9,6 @@ test('element loading', () => {
 });
 
 test('search element', () => {
-  const H = new Element('H', 'Idrogeno', 1, 1.00794, [1], 'NonMetal');
+  const H = new Element('H', 'Idrogeno', 1, 1.00794, [1], ElementType.NonMetal);
   expect(PeriodicTable.search('H')).toEqual(H);
 });

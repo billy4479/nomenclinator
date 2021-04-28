@@ -1,26 +1,10 @@
 import noop from '../noop';
 import type ElementN from './elementN';
 import PeriodicTable from './periodicTable';
+import type ICompound from './ICompound';
+import type CompoundType from './compoundType';
 
-export enum CompoundType {
-  /* eslint-disable no-unused-vars */
-  SaleBinnario,
-  OssidoAcido,
-  OssidoBasico,
-  Idracido,
-  IdruroCovalente,
-  IdruroMetallico,
-  Idrossido,
-  Ossiacido,
-  SaleTernario,
-  // Ossoanione,
-  ElementoSingolo,
-  Error,
-  Special,
-  /* eslint-enable */
-}
-
-export default class Compound {
+export default class Compound implements ICompound {
   // private main: ElementN[];
 
   // private parentheses: Compound | null;

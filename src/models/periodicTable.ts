@@ -1,5 +1,6 @@
 import Element from './element';
-import data from '../data.json'; // Yeah I know, I'm using a JSON file as a TS file, but otherwise jest would complain
+import data from '../data';
+import ElementType from './elementType';
 
 export default class PeriodicTable {
   private static instance: PeriodicTable;
@@ -15,9 +16,32 @@ export default class PeriodicTable {
   static get(): PeriodicTable {
     if (this.isInitialized) return PeriodicTable.instance;
 
-    const elements: Element[] = [];
+    const elements = new Array<Element>(data.length);
+    data.forEach((e) => {
+      let elementType: ElementType;
+      switch (e.rawType) {
+        case 'Metal':
+          elementType = ElementType.Metal;
+          break;
+        case 'NonMetal':
+          elementType = ElementType.NonMetal;
+          break;
+        case 'Metalloid':
+          elementType = ElementType.Metalloid;
+          break;
+        case 'Actinide':
+          elementType = ElementType.Actinide;
+          break;
+        case 'Lanthanide':
+          elementType = ElementType.Lanthanide;
+          break;
+        case 'NobleGas':
+          elementType = ElementType.NobleGas;
+          break;
+        default:
+          throw new Error(`Invalid ElementType: ${e.rawType}`);
+      }
 
-    data.elements.forEach((e: any) => {
       elements.push(
         new Element(
           e.symbol,
@@ -25,7 +49,7 @@ export default class PeriodicTable {
           e.atomicNumber,
           e.atomicWeight,
           e.oxidationStates,
-          e.type
+          elementType
         )
       );
     });

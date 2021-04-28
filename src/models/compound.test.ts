@@ -1,6 +1,7 @@
 import parseCompound from '../logic/parseCompound';
 import commonCompounds from './commonCompounds';
-import Compound, { CompoundType } from './compound';
+import Compound from './compound';
+import CompoundType from './compoundType';
 import ElementN from './elementN';
 import PeriodicTable from './periodicTable';
 

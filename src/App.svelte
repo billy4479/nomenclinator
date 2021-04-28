@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { CompoundType } from './models/compound';
+  import CompoundType from './models/compoundType';
   import { tweened } from 'svelte/motion';
   import { linear } from 'svelte/easing';
   import parse from './logic/parseCompound';
@@ -25,7 +25,7 @@
   const rotation = tweened(180, { duration: 100, easing: linear });
 </script>
 
-<main class="mt-10 text-white w-4/5 max-w-3xl m-auto text-center m-5">
+<main class="mt-10 text-white w-4/5 max-w-6xl m-auto text-center m-5">
   <h1 class="text-blue-400 text-6xl m-1">Nomenclinator</h1>
 
   <form class="mt-10 flex justify-center">

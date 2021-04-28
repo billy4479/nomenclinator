@@ -1,5 +1,6 @@
+import CompoundType from '../models/compoundType';
 import PeriodicTable from '../models/periodicTable';
-import Compound, { CompoundType } from '../models/compound';
+import Compound from '../models/compound';
 import GetCompoundType from './compoundTypeParser';
 import type ElementN from '../models/elementN';
 
@@ -14,7 +15,7 @@ export default function parseCompound(
 ): Compound {
   /* eslint-disable no-param-reassign */
 
-  data = data.match(/(\w|\d)*/g).join('');
+  data = data.match(/(\w|\d|\(|\))*/g).join('');
   let foundParentheses = false;
   let parentheses: Compound | undefined;
   let parenthesesN = 0;
