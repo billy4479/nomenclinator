@@ -5,16 +5,6 @@ import type ICompound from './ICompound';
 import type CompoundType from './compoundType';
 
 export default class Compound implements ICompound {
-  // private main: ElementN[];
-
-  // private parentheses: Compound | null;
-
-  // private parenthesesN: number;
-
-  // private canHaveParentheses: boolean;
-
-  // private compoundType: CompoundType;
-
   countElement(symbol: string): number {
     return (
       this.countElementInMain(symbol) + this.countElementInParentheses(symbol)
