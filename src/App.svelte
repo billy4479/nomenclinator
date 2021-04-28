@@ -1,7 +1,5 @@
 <script lang="ts">
   import CompoundType from './models/compoundType';
-  import { tweened } from 'svelte/motion';
-  import { linear } from 'svelte/easing';
   import parse from './logic/parseCompound';
   import './tailwind.css';
 
@@ -70,14 +68,25 @@
   </div>
 </main>
 
-<footer>&copy; Giacomo Ellero 2021 <br /> Made with ❤️</footer>
+<div class="footer-wrapper w-4/5 max-w-6xl m-auto text-center">
+  <a
+    href="https://github.com/billy4479/nomenclinator"
+    target="_blank"
+    rel="noreferrer noopener"
+  >
+    <img
+      class="inline mb-3"
+      alt="GitHub Repo stars"
+      src="https://img.shields.io/github/stars/billy4479/nomenclinator?style=social"
+    />
+  </a>
+  <br />
+  <footer>&copy; Giacomo Ellero 2021 <br /> Made with ❤️</footer>
+</div>
 
 <style>
   main {
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 150px);
     min-width: 300px;
-  }
-  footer {
-    text-align: center;
   }
 </style>
