@@ -3,6 +3,7 @@ import type ElementN from './elementN';
 import PeriodicTable from './periodicTable';
 import type ICompound from './ICompound';
 import type CompoundType from './compoundType';
+import ElementType from './elementType';
 
 export default class Compound implements ICompound {
   countElement(symbol: string): number {
@@ -95,5 +96,39 @@ export default class Compound implements ICompound {
       result += this.parentheses.getElementN(e) * this.parenthesesN;
 
     return result;
+  }
+
+  checkMetal(): boolean {
+    let hasMetal = false;
+
+    this.main.forEach((element) => {
+      if (element.element.elementType === ElementType.Metal) hasMetal = true;
+    });
+
+    if (this.parentheses !== null) {
+      hasMetal = hasMetal || this.parentheses.checkMetal();
+    }
+
+    return hasMetal;
+  }
+
+  checkNonMetal(excludeOH: boolean = true): boolean {
+    let hasNonMetal = false;
+
+    this.main.forEach((element) => {
+      if (
+        excludeOH &&
+        (element.element.symbol === 'O' || element.element.symbol === 'H')
+      )
+        return;
+      if (element.element.elementType === ElementType.NonMetal)
+        hasNonMetal = true;
+    });
+
+    if (this.parentheses !== null) {
+      hasNonMetal = hasNonMetal || this.parentheses.checkNonMetal();
+    }
+
+    return hasNonMetal;
   }
 }

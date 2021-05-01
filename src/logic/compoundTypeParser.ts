@@ -4,7 +4,7 @@ import ElementType from '../models/elementType';
 import CompoundType from '../models/compoundType';
 
 export default function GetCompoundType(c: Compound): CompoundType {
-  // TODO: Perossidi, sali biacidi
+  // TODO: Perossidi
 
   let i: number | undefined;
   commonCompounds.forEach((comComp, index) => {
@@ -31,26 +31,8 @@ export default function GetCompoundType(c: Compound): CompoundType {
     return CompoundType.SaleBinnario;
   }
   if (c.totalLength === 3) {
-    let hasNonMetal = false;
-    let hasMetal = false;
-
-    c.main.forEach((element) => {
-      if (element.element.symbol === 'O' || element.element.symbol === 'H')
-        return;
-      if (element.element.elementType === ElementType.Metal) hasMetal = true;
-      if (element.element.elementType === ElementType.NonMetal)
-        hasNonMetal = true;
-    });
-
-    if (c.parentheses !== null) {
-      c.parentheses.main.forEach((element) => {
-        if (element.element.symbol === 'O' || element.element.symbol === 'H')
-          return;
-        if (element.element.elementType === ElementType.Metal) hasMetal = true;
-        if (element.element.elementType === ElementType.NonMetal)
-          hasNonMetal = true;
-      });
-    }
+    const hasMetal = c.checkMetal();
+    const hasNonMetal = c.checkNonMetal();
 
     if (hasMetal && !hasNonMetal) return CompoundType.Idrossido;
 
@@ -58,6 +40,11 @@ export default function GetCompoundType(c: Compound): CompoundType {
 
     if (hasMetal && hasNonMetal) return CompoundType.SaleTernario;
 
+    return CompoundType.Error;
+  }
+  if (c.totalLength === 4) {
+    if (c.checkMetal() && c.checkNonMetal() && c.has('H'))
+      return CompoundType.SaleAcido;
     return CompoundType.Error;
   }
 

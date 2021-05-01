@@ -9,6 +9,7 @@ enum CompoundType {
   Idrossido,
   Ossiacido,
   SaleTernario,
+  SaleAcido,
   ElementoSingolo,
   Error,
   Special,
