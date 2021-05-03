@@ -1,4 +1,5 @@
 import Compound from './compound';
+import CompoundNames from './compoundNames';
 import CompoundType from './compoundType';
 import ElementN from './elementN';
 import PeriodicTable from './periodicTable';
@@ -12,6 +13,7 @@ const commonCompounds: Compound[] = [
     null,
     0,
     CompoundType.Special,
+    new CompoundNames('Acqua', 'Acqua'),
     true
   ),
 ];

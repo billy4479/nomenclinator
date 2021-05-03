@@ -4,6 +4,7 @@ import PeriodicTable from './periodicTable';
 import type ICompound from './ICompound';
 import type CompoundType from './compoundType';
 import ElementType from './elementType';
+import compoundNames from './compoundNames';
 
 export default class Compound implements ICompound {
   countElement(symbol: string): number {
@@ -33,6 +34,7 @@ export default class Compound implements ICompound {
     readonly parentheses: Compound | null,
     readonly parenthesesN: number,
     public compoundType: CompoundType,
+    public names: compoundNames,
     readonly canHaveParentheses: boolean = true /* eslint-enable */
   ) {
     noop(); // Ehm ok...

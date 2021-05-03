@@ -5,6 +5,8 @@ import icons from './svg';
 const form = document.getElementById('input-form') as HTMLFormElement;
 const textInput = document.getElementById('input-text') as HTMLInputElement;
 const outCompoundType = document.getElementById('out-type') as HTMLDivElement;
+const outCompoundTrad = document.getElementById('out-trad') as HTMLDivElement;
+const outCompoundIUPAC = document.getElementById('out-iupac') as HTMLDivElement;
 const jsonToggle = document.getElementById('json-toggle') as HTMLButtonElement;
 const jsonWrapper = document.getElementById('json-wrapper') as HTMLDivElement;
 const darkModeToggle = document.getElementById(
@@ -22,7 +24,9 @@ jsonContent.className =
 function displayCompound(input: string) {
   const c = parseCompound(input);
   jsonContent.innerText = JSON.stringify(c, undefined, 2);
-  outCompoundType.innerHTML = CompoundType[c.compoundType];
+  outCompoundType.innerText = CompoundType[c.compoundType];
+  outCompoundTrad.innerText = c.names.traditional;
+  outCompoundIUPAC.innerText = c.names.IUPAC;
 }
 
 function updateJSONView() {

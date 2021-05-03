@@ -3,6 +3,8 @@ import PeriodicTable from '../models/periodicTable';
 import Compound from '../models/compound';
 import GetCompoundType from './compoundTypeParser';
 import type ElementN from '../models/elementN';
+import CompoundNames from '../models/compoundNames';
+import getCompoundName from './getCompoundName';
 
 function isUpperCase(input: string): boolean {
   if (input.match(/\d/)) return false;
@@ -101,10 +103,12 @@ export default function parseCompound(
     main,
     parentheses || null,
     parenthesesN,
-    CompoundType.Error
+    CompoundType.Error,
+    new CompoundNames()
   );
 
   result.compoundType = GetCompoundType(result);
+  result.names = getCompoundName(result);
 
   return result;
 }
