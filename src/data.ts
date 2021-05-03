@@ -358,7 +358,7 @@ export default <IElement[]>[
     symbol: 'I',
     atomicNumber: 53,
     atomicWeight: 126.9045,
-    oxidationStates: [1, -1, 5, 7],
+    oxidationStates: [1, -1, 3, 5, 7],
     rawType: 'NonMetal',
   },
   {
