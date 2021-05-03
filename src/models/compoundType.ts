@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 enum CompoundType {
-  SaleBinnario,
+  SaleBinario,
   OssidoAcido,
   OssidoBasico,
   Idracido,

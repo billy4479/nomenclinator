@@ -16,6 +16,7 @@ module.exports = {
     'import/extensions': ['error', { ts: 'never' }],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+    'no-case-declarations': 'off',
   },
   ignorePatterns: ['build/*', 'node_modules/*'],
 };

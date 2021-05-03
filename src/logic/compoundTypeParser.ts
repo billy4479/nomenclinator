@@ -28,7 +28,7 @@ export default function GetCompoundType(c: Compound): CompoundType {
         return CompoundType.OssidoBasico;
       return CompoundType.OssidoAcido;
     }
-    return CompoundType.SaleBinnario;
+    return CompoundType.SaleBinario;
   }
   if (c.totalLength === 3) {
     const hasMetal = c.checkMetal();
