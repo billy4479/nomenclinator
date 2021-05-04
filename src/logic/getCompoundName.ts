@@ -37,8 +37,19 @@ export default function getCompoundName(c: Compound): CompoundNames {
           ? c.main[0]
           : c.main[1];
 
-      // Traditional
+      // IUPAC
       {
+        const prefix = utils.getGreekPrefix(first.n);
+        const body = utils.prepareForSuffix(first.element.name);
+        names.IUPAC = `${prefix}${
+          prefix === '' ? body : body.toLowerCase()
+        }uro di ${second.element.name}`;
+      }
+
+      // Traditional
+      if (second.element.oxidationStates.length === 1)
+        names.traditional = names.IUPAC;
+      else {
         const os = first.n;
         const i = second.element.oxidationStates.indexOf(os);
         if (!i) names.traditional = 'Error';
@@ -49,11 +60,6 @@ export default function getCompoundName(c: Compound): CompoundNames {
           first.element.name
         )}uro ${utils.prepareForSuffix(second.element.name)}${suffix}`;
       }
-
-      // IUPAC
-      names.IUPAC = `${utils.getGreekPrefix(first.n)}${utils
-        .prepareForSuffix(first.element.name)
-        .toLowerCase()}uro di ${second.element.name}`;
 
       break;
 
