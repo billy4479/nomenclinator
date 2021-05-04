@@ -19,6 +19,19 @@ function getGreekPrefix(n: number): string {
   }
 }
 
+// const vocals = ['a', 'e', 'i', 'o', 'u'];
+
+// function prepareForSuffix(elementName: string): string {
+//   let index = 0;
+//   for (let i = elementName.length - 1; i > 0; i--) {
+//     if (!vocals.includes(elementName[i])) {
+//       index = i;
+//       break;
+//     }
+//   }
+//   return elementName.slice(undefined, index);
+// }
+
 function prepareForSuffix(elementName: string): string {
   return elementName.slice(undefined, elementName.length - 1);
 }

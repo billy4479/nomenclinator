@@ -57,6 +57,52 @@ export default function getCompoundName(c: Compound): CompoundNames {
 
       break;
 
+    case CompoundType.OssidoAcido:
+      // CO2 -> Anidride Carbonica
+      //     -> Diossido di Carbonio
+
+      const O = c.main[0].element.symbol === 'O' ? c.main[0] : c.main[1];
+      const other = c.main[0].element.symbol !== 'O' ? c.main[0] : c.main[1];
+
+      // IUPAC
+      {
+        const prefix = utils.getGreekPrefix(O.n);
+        names.IUPAC = `${prefix}${prefix === '' ? 'Ossido' : 'ossido'} di ${
+          other.element.name
+        }`;
+      }
+
+      // Traditional
+      {
+        let ox = 0;
+        other.element.oxidationStates.forEach((v) => {
+          if (v * other.n + O.element.oxidationStates[0] * O.n === 0) ox = v;
+        });
+
+        const filtered = other.element.oxidationStates.filter(
+          (v) => v > 0 === ox > 0
+        );
+
+        const i = filtered.indexOf(ox);
+
+        const suffix = filtered.length / 2 > i ? 'osa' : 'ica';
+        let prefix = '';
+        if (filtered.length >= 4) {
+          if (i === 0) prefix = 'Ipo';
+          if (i === filtered.length - 1) prefix = 'Per';
+        }
+
+        let body = utils.prepareForSuffix(other.element.name);
+        if (body[body.length - 1] === suffix[0])
+          body = body.slice(0, body.length - 2);
+
+        names.traditional = `Anidride ${prefix}${
+          prefix === '' ? body : body.toLocaleLowerCase()
+        }${suffix}`;
+      }
+
+      break;
+
     default:
       names.IUPAC = 'Error';
       names.traditional = 'Error';
