@@ -7,6 +7,7 @@ const textInput = document.getElementById('input-text') as HTMLInputElement;
 const outCompoundType = document.getElementById('out-type') as HTMLDivElement;
 const outCompoundTrad = document.getElementById('out-trad') as HTMLDivElement;
 const outCompoundIUPAC = document.getElementById('out-iupac') as HTMLDivElement;
+const outError = document.getElementById('out-err') as HTMLDivElement;
 const jsonToggle = document.getElementById('json-toggle') as HTMLButtonElement;
 const jsonWrapper = document.getElementById('json-wrapper') as HTMLDivElement;
 const darkModeToggle = document.getElementById(
@@ -22,11 +23,18 @@ jsonContent.className =
   'bg-gray-100 shadow p-5 rounded m-3 my-5 overflow-auto text-gray-900 dark:bg-gray-900 dark:text-gray-100';
 
 function displayCompound(input: string) {
-  const c = parseCompound(input);
-  jsonContent.innerText = JSON.stringify(c, undefined, 2);
-  outCompoundType.innerText = CompoundType[c.compoundType];
-  outCompoundTrad.innerText = c.names.traditional;
-  outCompoundIUPAC.innerText = c.names.IUPAC;
+  outError.innerHTML = '';
+  outError.className = '';
+  try {
+    const c = parseCompound(input);
+    jsonContent.innerText = JSON.stringify(c, undefined, 2);
+    outCompoundType.innerText = CompoundType[c.compoundType];
+    outCompoundTrad.innerText = c.names.traditional;
+    outCompoundIUPAC.innerText = c.names.IUPAC;
+  } catch (error) {
+    outError.className = 'shadow p-5 rounded';
+    outError.innerHTML = `C'è stato un errore: <pre class="bg-gray-100 shadow p-5 rounded m-3 my-5 overflow-auto text-gray-900 dark:bg-gray-900 dark:text-gray-100">${error}</pre> Se pensi sia un bug riportalo <a href="https://github.com/billy4479/nomenclinator/issues" class="text-blue-600 underline" target="_blank" rel="noreferrer noopener">qui</a>`;
+  }
 }
 
 function updateJSONView() {

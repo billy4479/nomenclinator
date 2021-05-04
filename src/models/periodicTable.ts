@@ -16,7 +16,7 @@ export default class PeriodicTable {
   static get(): PeriodicTable {
     if (this.isInitialized) return PeriodicTable.instance;
 
-    const elements = new Array<Element>(data.length);
+    const elements: Element[] = [];
     data.forEach((e) => {
       let elementType: ElementType;
       switch (e.rawType) {
