@@ -39,17 +39,25 @@ export default function getCompoundName(c: Compound): CompoundNames {
 
       // IUPAC
       {
-        const prefix = utils.getGreekPrefix(first.n);
+        const prefixFirst = utils.getGreekPrefix(first.n);
+        const prefixSecond = utils.getGreekPrefix(second.n);
         const body = utils.prepareForSuffix(first.element.name);
-        names.IUPAC = `${prefix}${
-          prefix === '' ? body : body.toLowerCase()
-        }uro di ${second.element.name}`;
+        names.IUPAC = `${prefixFirst}${
+          prefixFirst === '' ? body : body.toLowerCase()
+        }uro di ${prefixSecond}${
+          prefixSecond === ''
+            ? second.element.name
+            : second.element.name.toLowerCase()
+        }`;
       }
 
       // Traditional
-      if (second.element.oxidationStates.length === 1)
+      if (second.element.oxidationStates.length === 1) {
         names.traditional = names.IUPAC;
-      else {
+        break;
+      }
+
+      {
         const os = first.n;
         const i = second.element.oxidationStates.indexOf(os);
         if (!i) names.traditional = 'Error';
@@ -64,22 +72,35 @@ export default function getCompoundName(c: Compound): CompoundNames {
       break;
 
     case CompoundType.OssidoAcido:
-      // CO2 -> Anidride Carbonica
-      //     -> Diossido di Carbonio
+    case CompoundType.OssidoBasico:
+      // CO2   -> Anidride Carbonica
+      //       -> Diossido di Carbonio
+      // Ni2O3 -> Ossido Nichelico
+      //       -> Triossido di Dinichel
 
       const O = c.main[0].element.symbol === 'O' ? c.main[0] : c.main[1];
       const other = c.main[0].element.symbol !== 'O' ? c.main[0] : c.main[1];
 
       // IUPAC
       {
-        const prefix = utils.getGreekPrefix(O.n);
-        names.IUPAC = `${prefix}${prefix === '' ? 'Ossido' : 'ossido'} di ${
-          other.element.name
+        const prefixO = utils.getGreekPrefix(O.n);
+        const prefixOther = utils.getGreekPrefix(other.n);
+        names.IUPAC = `${prefixO}${
+          prefixO === '' ? 'Ossido' : 'ossido'
+        } di ${prefixOther}${
+          prefixOther === ''
+            ? other.element.name
+            : other.element.name.toLowerCase()
         }`;
       }
 
       // Traditional
       {
+        if (other.element.oxidationStates.length === 1) {
+          names.traditional = names.IUPAC;
+          break;
+        }
+
         let ox = 0;
         other.element.oxidationStates.forEach((v) => {
           if (v * other.n + O.element.oxidationStates[0] * O.n === 0) ox = v;
@@ -91,7 +112,11 @@ export default function getCompoundName(c: Compound): CompoundNames {
 
         const i = filtered.indexOf(ox);
 
-        const suffix = filtered.length / 2 > i ? 'osa' : 'ica';
+        let suffix = '';
+        if (c.compoundType === CompoundType.OssidoAcido)
+          suffix = filtered.length / 2 > i ? 'osa' : 'ica';
+        else suffix = filtered.length / 2 > i ? 'oso' : 'ico';
+
         let prefix = '';
         if (filtered.length >= 4) {
           if (i === 0) prefix = 'Ipo';
@@ -102,9 +127,9 @@ export default function getCompoundName(c: Compound): CompoundNames {
         if (body[body.length - 1] === suffix[0])
           body = body.slice(0, body.length - 2);
 
-        names.traditional = `Anidride ${prefix}${
-          prefix === '' ? body : body.toLocaleLowerCase()
-        }${suffix}`;
+        names.traditional = `${
+          c.compoundType === CompoundType.OssidoAcido ? 'Anidride' : 'Ossido'
+        } ${prefix}${prefix === '' ? body : body.toLocaleLowerCase()}${suffix}`;
       }
 
       break;

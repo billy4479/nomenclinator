@@ -550,7 +550,7 @@ export default <IElement[]>[
     symbol: 'P',
     atomicNumber: 15,
     atomicWeight: 30.97376,
-    oxidationStates: [3, -3, 5, 4],
+    oxidationStates: [3, -3, 4, 5],
     rawType: 'NonMetal',
   },
   {
