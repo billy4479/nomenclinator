@@ -27,46 +27,50 @@ export default function getCompoundName(c: Compound): CompoundNames {
       // FeCl3 -> Cloruro Ferr-oso
       //       -> tri-cloruro di ferro
 
-      const first =
-        c.main[0].element.elementType === ElementType.NonMetal
-          ? c.main[0]
-          : c.main[1];
-
-      const second =
-        c.main[0].element.elementType === ElementType.Metal
-          ? c.main[0]
-          : c.main[1];
-
-      // IUPAC
       {
-        const prefixFirst = utils.getGreekPrefix(first.n);
-        const prefixSecond = utils.getGreekPrefix(second.n);
-        const body = utils.prepareForSuffix(first.element.name);
-        names.IUPAC = `${prefixFirst}${
-          prefixFirst === '' ? body : body.toLowerCase()
-        }uro di ${prefixSecond}${
-          prefixSecond === ''
-            ? second.element.name
-            : second.element.name.toLowerCase()
-        }`;
-      }
+        const first =
+          c.main[0].element.elementType === ElementType.NonMetal
+            ? c.main[0]
+            : c.main[1];
 
-      // Traditional
-      if (second.element.oxidationStates.length === 1) {
-        names.traditional = names.IUPAC;
-        break;
-      }
+        const second =
+          c.main[0].element.elementType === ElementType.Metal
+            ? c.main[0]
+            : c.main[1];
 
-      {
-        const os = first.n;
-        const i = second.element.oxidationStates.indexOf(os);
-        if (!i) names.traditional = 'Error';
-        const suffix =
-          second.element.oxidationStates.length / 2 > i ? 'oso' : 'ico';
+        // IUPAC
+        {
+          const prefixFirst = utils.getGreekPrefix(first.n);
+          const prefixSecond = utils.getGreekPrefix(second.n);
+          const body = utils.prepareForSuffix(first.element.name);
+          names.IUPAC = `${prefixFirst}${
+            prefixFirst === '' ? body : body.toLowerCase()
+          }uro di ${prefixSecond}${
+            prefixSecond === ''
+              ? second.element.name
+              : second.element.name.toLowerCase()
+          }`;
+        }
 
-        names.traditional = `${utils.prepareForSuffix(
-          first.element.name
-        )}uro ${utils.prepareForSuffix(second.element.name)}${suffix}`;
+        // Traditional
+        if (second.element.oxidationStates.length === 1) {
+          names.traditional = `${utils.prepareForSuffix(
+            first.element.name
+          )}uro di ${second.element.name}`;
+          break;
+        }
+
+        {
+          const os = first.n;
+          const i = second.element.oxidationStates.indexOf(os);
+          if (!i) names.traditional = 'Error';
+          const suffix =
+            second.element.oxidationStates.length / 2 > i ? 'oso' : 'ico';
+
+          names.traditional = `${utils.prepareForSuffix(
+            first.element.name
+          )}uro ${utils.prepareForSuffix(second.element.name)}${suffix}`;
+        }
       }
 
       break;
@@ -78,60 +82,102 @@ export default function getCompoundName(c: Compound): CompoundNames {
       // Ni2O3 -> Ossido Nichelico
       //       -> Triossido di Dinichel
 
-      const O = c.main[0].element.symbol === 'O' ? c.main[0] : c.main[1];
-      const other = c.main[0].element.symbol !== 'O' ? c.main[0] : c.main[1];
-
-      // IUPAC
       {
-        const prefixO = utils.getGreekPrefix(O.n);
-        const prefixOther = utils.getGreekPrefix(other.n);
-        names.IUPAC = `${prefixO}${
-          prefixO === '' ? 'Ossido' : 'ossido'
-        } di ${prefixOther}${
-          prefixOther === ''
-            ? other.element.name
-            : other.element.name.toLowerCase()
-        }`;
-      }
+        const O = c.main[0].element.symbol === 'O' ? c.main[0] : c.main[1];
+        const other = c.main[0].element.symbol !== 'O' ? c.main[0] : c.main[1];
 
-      // Traditional
-      {
-        if (other.element.oxidationStates.length === 1) {
-          names.traditional = names.IUPAC;
-          break;
+        // IUPAC
+        {
+          const prefixO = utils.getGreekPrefix(O.n);
+          const prefixOther = utils.getGreekPrefix(other.n);
+          names.IUPAC = `${prefixO}${
+            prefixO === '' ? 'Ossido' : 'ossido'
+          } di ${prefixOther}${
+            prefixOther === ''
+              ? other.element.name
+              : other.element.name.toLowerCase()
+          }`;
         }
 
-        let ox = 0;
-        other.element.oxidationStates.forEach((v) => {
-          if (v * other.n + O.element.oxidationStates[0] * O.n === 0) ox = v;
-        });
+        // Traditional
+        {
+          if (other.element.oxidationStates.length === 1) {
+            names.traditional = `Ossido di ${other.element.name}`;
+            break;
+          }
 
-        const filtered = other.element.oxidationStates.filter(
-          (v) => v > 0 === ox > 0
-        );
+          let ox = 0;
+          other.element.oxidationStates.forEach((v) => {
+            if (v * other.n + O.element.oxidationStates[0] * O.n === 0) ox = v;
+          });
 
-        const i = filtered.indexOf(ox);
+          const filtered = other.element.oxidationStates.filter(
+            (v) => v > 0 === ox > 0
+          );
 
-        let suffix = '';
-        if (c.compoundType === CompoundType.OssidoAcido)
-          suffix = filtered.length / 2 > i ? 'osa' : 'ica';
-        else suffix = filtered.length / 2 > i ? 'oso' : 'ico';
+          const i = filtered.indexOf(ox);
 
-        let prefix = '';
-        if (filtered.length >= 4) {
-          if (i === 0) prefix = 'Ipo';
-          if (i === filtered.length - 1) prefix = 'Per';
+          let suffix = '';
+          if (c.compoundType === CompoundType.OssidoAcido)
+            suffix = filtered.length / 2 > i ? 'osa' : 'ica';
+          else suffix = filtered.length / 2 > i ? 'oso' : 'ico';
+
+          let prefix = '';
+          if (filtered.length >= 4) {
+            if (i === 0) prefix = 'Ipo';
+            if (i === filtered.length - 1) prefix = 'Per';
+          }
+
+          let body = utils.prepareForSuffix(other.element.name);
+          if (body[body.length - 1] === suffix[0])
+            body = body.slice(0, body.length - 2);
+
+          names.traditional = `${
+            c.compoundType === CompoundType.OssidoAcido ? 'Anidride' : 'Ossido'
+          } ${prefix}${
+            prefix === '' ? body : body.toLocaleLowerCase()
+          }${suffix}`;
+        }
+      }
+      break;
+
+    case CompoundType.Idracido:
+    case CompoundType.IdruroMetallico:
+    case CompoundType.IdruroCovalente:
+      {
+        const H = c.main[0].element.symbol === 'H' ? c.main[0] : c.main[1];
+        const other = c.main[0].element.symbol !== 'H' ? c.main[0] : c.main[1];
+
+        // IUPAC
+        {
+          const prefixH = utils.getGreekPrefix(H.n);
+          const prefixOther = utils.getGreekPrefix(other.n);
+          names.IUPAC = `${prefixH}${
+            prefixH === '' ? 'Idruro' : 'idruro'
+          } di ${prefixOther}${
+            prefixOther === ''
+              ? other.element.name
+              : other.element.name.toLowerCase()
+          }`;
         }
 
-        let body = utils.prepareForSuffix(other.element.name);
-        if (body[body.length - 1] === suffix[0])
-          body = body.slice(0, body.length - 2);
+        switch (c.compoundType) {
+          case CompoundType.Idracido:
+            let body = utils.prepareForSuffix(other.element.name);
+            const suffix = 'idrico';
+            if (body[body.length - 1] === suffix[0])
+              body = body.slice(0, body.length - 1);
 
-        names.traditional = `${
-          c.compoundType === CompoundType.OssidoAcido ? 'Anidride' : 'Ossido'
-        } ${prefix}${prefix === '' ? body : body.toLocaleLowerCase()}${suffix}`;
+            names.traditional = `Acido ${body}${suffix}`;
+            break;
+          case CompoundType.IdruroCovalente:
+          case CompoundType.IdruroMetallico:
+            names.traditional = `Idruro di ${other.element.name}`;
+            break;
+          default:
+            break;
+        }
       }
-
       break;
 
     default:
