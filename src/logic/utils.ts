@@ -13,7 +13,7 @@ function getGreekPrefix(n: number): string {
     case 6:
       return 'Esa';
     case 7:
-      return 'Sept';
+      return 'Epta';
     default:
       throw new Error(`Invalid number: ${n}`);
   }
