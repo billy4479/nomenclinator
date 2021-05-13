@@ -152,13 +152,21 @@ export default function getCompoundName(c: Compound): CompoundNames {
         {
           const prefixH = utils.getGreekPrefix(H.n);
           const prefixOther = utils.getGreekPrefix(other.n);
-          names.IUPAC = `${prefixH}${
-            prefixH === '' ? 'Idruro' : 'idruro'
-          } di ${prefixOther}${
-            prefixOther === ''
-              ? other.element.name
-              : other.element.name.toLowerCase()
-          }`;
+          if (c.compoundType === CompoundType.Idracido) {
+            names.IUPAC = `${prefixOther}${
+              prefixOther === ''
+                ? other.element.name
+                : other.element.name.toLowerCase()
+            } di ${prefixH}${prefixH === '' ? 'Idrogeno' : 'idrogeno'}`;
+          } else {
+            names.IUPAC = `${prefixH}${
+              prefixH === '' ? 'Idruro' : 'idruro'
+            } di ${prefixOther}${
+              prefixOther === ''
+                ? other.element.name
+                : other.element.name.toLowerCase()
+            }`;
+          }
         }
 
         switch (c.compoundType) {
