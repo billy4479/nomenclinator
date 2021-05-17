@@ -310,7 +310,7 @@ export default <IElement[]>[
     symbol: 'H',
     atomicNumber: 1,
     atomicWeight: 1.00794,
-    oxidationStates: [1],
+    oxidationStates: [1, -1],
     rawType: 'NonMetal',
   },
   {

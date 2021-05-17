@@ -13,7 +13,7 @@ function isUpperCase(input: string): boolean {
 
 export default function parseCompound(
   data: string,
-  canHaveParentheses = true
+  isInsideParentheses = false
 ): Compound {
   /* eslint-disable no-param-reassign */
 
@@ -27,7 +27,7 @@ export default function parseCompound(
 
   // Check parentheses
   if (data.includes('(')) {
-    if (foundParentheses || !canHaveParentheses)
+    if (foundParentheses || isInsideParentheses)
       throw new Error('Too many parentheses!');
 
     // Find the index of the last parentheses
@@ -35,7 +35,7 @@ export default function parseCompound(
     const last = data.indexOf(')');
     if (last === -1) throw new Error('Unable to find closing parentheses');
 
-    parentheses = parseCompound(data.substring(first + 1, last));
+    parentheses = parseCompound(data.substring(first + 1, last), true);
     let i = last + 1;
     let n = '';
     for (i; i < data.length; i++) {
@@ -104,7 +104,8 @@ export default function parseCompound(
     parentheses || null,
     parenthesesN,
     CompoundType.Error,
-    new CompoundNames()
+    new CompoundNames(),
+    isInsideParentheses
   );
 
   result.compoundType = GetCompoundType(result);

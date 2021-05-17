@@ -11,6 +11,7 @@ enum CompoundType {
   SaleTernario,
   SaleAcido,
   ElementoSingolo,
+  Ossoanione,
   Error,
   Special,
 }

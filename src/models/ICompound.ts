@@ -10,5 +10,5 @@ export default interface ICompound {
 
   compoundType: CompoundType;
 
-  readonly canHaveParentheses: boolean;
+  readonly isInsideParentheses: boolean;
 }

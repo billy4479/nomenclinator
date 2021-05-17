@@ -22,7 +22,7 @@ export default class Compound implements ICompound {
   }
 
   countElementInParentheses(symbol: string): number {
-    if (this.canHaveParentheses && this.parentheses !== null) {
+    if (!this.isInsideParentheses && this.parentheses !== null) {
       return this.parentheses.countElementInMain(symbol);
     }
     return 0;
@@ -35,7 +35,8 @@ export default class Compound implements ICompound {
     readonly parenthesesN: number,
     public compoundType: CompoundType,
     public names: compoundNames,
-    readonly canHaveParentheses: boolean = true /* eslint-enable */
+    readonly isInsideParentheses: boolean = false,
+    public charge: number = 0 /* eslint-enable */
   ) {
     noop(); // Ehm ok...
   }
@@ -74,7 +75,7 @@ export default class Compound implements ICompound {
   }
 
   hasInParentheses(element: string): boolean {
-    if (!this.canHaveParentheses || this.parentheses === null) return false;
+    if (this.isInsideParentheses || this.parentheses === null) return false;
     return this.parentheses.has(element);
   }
 
@@ -83,7 +84,7 @@ export default class Compound implements ICompound {
   }
 
   get hasParentheses(): boolean {
-    return this.canHaveParentheses && this.parentheses !== null;
+    return !this.isInsideParentheses && this.parentheses !== null;
   }
 
   getElementN(e: string): number {
@@ -132,5 +133,9 @@ export default class Compound implements ICompound {
     }
 
     return hasNonMetal;
+  }
+
+  setCharge(c: number) {
+    this.charge = Math.round(c);
   }
 }
