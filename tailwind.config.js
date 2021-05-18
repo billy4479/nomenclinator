@@ -1,6 +1,6 @@
 module.exports = {
   purge: {
-    content: ['./src/**/*.html', './src/**/*.css'],
+    content: ['./*.html', './src/**/*.css'],
 
     options: {
       safelist: ['text-gray-900', 'dark:bg-gray-900', 'dark:text-gray-100'],
