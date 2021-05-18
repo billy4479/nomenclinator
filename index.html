@@ -5,8 +5,8 @@
     <link rel="icon" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nomenclinator</title>
-    <link rel="stylesheet" href="/ui/tailwind.css" />
-    <link rel="stylesheet" href="/ui/styles.css" />
+    <link rel="stylesheet" href="/src/ui/tailwind.css" />
+    <link rel="stylesheet" href="/src/ui/styles.css" />
   </head>
   <body class="dark:bg-gray-800">
     <noscript>Abilita JavaScript per usare questo sito.</noscript>
@@ -17,17 +17,49 @@
       <h1 class="text-blue-600 text-4xl m-1 md:text-6xl">Nomenclinator</h1>
       <button
         id="dark-mode-toggle"
-        class="m-3 ml-0 px-3 py-2 shadow rounded focus:ring dark:bg-gray-700 dark:hover:bg-gray-800"
+        class="
+          m-3
+          ml-0
+          px-3
+          py-2
+          shadow
+          rounded
+          focus:ring
+          dark:bg-gray-700
+          dark:hover:bg-gray-800
+        "
       ></button>
       <form class="mt-7 flex justify-center" id="input-form">
         <input
-          class="shadow border border-gray-100 rounded px-3 py-2 my-3 flex-grow placeholder-gray-500 focus:ring dark:bg-gray-700 dark:border-gray-700"
+          class="
+            shadow
+            border border-gray-100
+            rounded
+            px-3
+            py-2
+            my-3
+            flex-grow
+            placeholder-gray-500
+            focus:ring
+            dark:bg-gray-700
+            dark:border-gray-700
+          "
           type="text"
           placeholder="Scrivi un composto..."
           id="input-text"
         />
         <input
-          class="m-3 mr-0 px-3 py-2 shadow rounded focus:ring dark:bg-gray-700 dark:hover:bg-gray-800"
+          class="
+            m-3
+            mr-0
+            px-3
+            py-2
+            shadow
+            rounded
+            focus:ring
+            dark:bg-gray-700
+            dark:hover:bg-gray-800
+          "
           type="submit"
           value="Vai!"
         />
@@ -55,7 +87,15 @@
               :</b
             >
             <button
-              class="rounded shadow py-1 px-2 focus:ring dark:bg-gray-700 dark:hover:bg-gray-800"
+              class="
+                rounded
+                shadow
+                py-1
+                px-2
+                focus:ring
+                dark:bg-gray-700
+                dark:hover:bg-gray-800
+              "
               id="json-toggle"
             ></button>
           </div>
@@ -87,6 +127,6 @@
       </footer>
     </div>
 
-    <script type="module" src="/index.ts"></script>
+    <script type="module" src="/src/index.ts"></script>
   </body>
 </html>
